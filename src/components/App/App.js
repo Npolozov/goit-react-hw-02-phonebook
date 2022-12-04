@@ -4,7 +4,7 @@ import { List } from '../List/List';
 import { nanoid } from 'nanoid';
 import { Filter } from '../Filter/Filter';
 import initialContact from 'contact.json';
-import { Container, Wrapper, WrapperContact } from './App.styled';
+import { Container, Wrapper, WrapperContact, Title } from './App.styled';
 import { GlobalStyle } from '../GlobalStyles.styled';
 export class App extends Component {
   state = {
@@ -40,7 +40,7 @@ export class App extends Component {
 
   render() {
     const { contacts, filter } = this.state;
-    // const lenghtContactts = contacts.length;
+    const lenghtContactts = contacts.length;
     const normalizeFilter = this.state.filter.toLowerCase();
     const visibleContact = this.state.contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter)
@@ -51,11 +51,12 @@ export class App extends Component {
         {' '}
         <Container>
           <Wrapper>
-            <h1>Phonebook</h1>
+            <Title>Phonebook</Title>
             <Form onSubmit={this.addContact} />
           </Wrapper>
           <WrapperContact>
-            <h2>Contacts</h2>
+            <p>Total contacts: {lenghtContactts}</p>
+            <Title>Contacts</Title>
             <Filter value={filter} onChange={this.changeFilter} />
             {contacts.length > 0 && (
               <List

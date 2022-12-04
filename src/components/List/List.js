@@ -1,5 +1,6 @@
 import { ListContact } from '../ListContact/ListContact';
 import { ListStyle, ItemStyle } from './List.styled';
+import PropTypes from 'prop-types';
 
 export const List = ({ items, onDeleteContact }) => {
   return (
@@ -11,4 +12,9 @@ export const List = ({ items, onDeleteContact }) => {
       ))}
     </ListStyle>
   );
+};
+
+List.propTypes = {
+  items: PropTypes.array.isRequired,
+  onDeleteContact: PropTypes.func.isRequired,
 };
