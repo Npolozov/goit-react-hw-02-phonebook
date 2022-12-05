@@ -3,20 +3,20 @@ import { Formik, Form, ErrorMessage } from 'formik';
 import { Wrapper, Button, Label, Input } from './Form.style';
 import * as yup from 'yup';
 
+const state = {
+  name: '',
+  number: '',
+};
+
+const schema = yup.object().shape({
+  name: yup.string().required(),
+  number: yup.number().required(),
+});
+
 export class ContactForm extends Component {
-  state = {
-    name: ' ',
-    number: ' ',
-  };
-
-  schema = yup.object().shape({
-    name: yup.string().required(),
-    number: yup.number().required(),
-  });
-
   handleSubmit = (values, { resetForm }) => {
     console.log(values);
-    this.props.onSubmit(this.state);
+    this.props.onSubmit(values);
     resetForm();
   };
 
@@ -32,8 +32,8 @@ export class ContactForm extends Component {
   render() {
     return (
       <Formik
-        initialValues={this.state}
-        // validationSchema={this.schema}
+        initialValues={state}
+        validationSchema={schema}
         onSubmit={this.handleSubmit}
       >
         <Form>
@@ -42,7 +42,7 @@ export class ContactForm extends Component {
             <Input
               type="text"
               id="name"
-              value={this.state.name}
+              // value={state.name}
               onChange={this.handleChange}
               name="name"
             />
@@ -54,7 +54,7 @@ export class ContactForm extends Component {
               id="number"
               type="tel"
               name="number"
-              value={this.state.number}
+              // value={state.number}
               onChange={this.handleChange}
             />
             <ErrorMessage name="number" />
