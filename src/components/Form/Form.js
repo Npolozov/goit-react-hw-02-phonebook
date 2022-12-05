@@ -20,10 +20,10 @@ export class ContactForm extends Component {
     resetForm();
   };
 
-  handleChange = evt => {
-    const { name, value } = evt.target;
-    this.setState({ [name]: value });
-  };
+  // handleChange = evt => {
+  //   const { name, value } = evt.target;
+  //   this.setState({ [name]: value });
+  // };
 
   // reset = () => {
   //   this.setState({ name: '', number: '' });
@@ -35,28 +35,17 @@ export class ContactForm extends Component {
         initialValues={state}
         validationSchema={schema}
         onSubmit={this.handleSubmit}
+        // onChange={this.handleChange}
       >
         <Form>
           <Wrapper>
             <Label htmlFor="name">Name</Label>
-            <Input
-              type="text"
-              id="name"
-              // value={state.name}
-              onChange={this.handleChange}
-              name="name"
-            />
+            <Input type="text" id="name" name="name" />
             <ErrorMessage name="name" />
           </Wrapper>
           <Wrapper>
             <Label htmlFor="number">Number</Label>
-            <Input
-              id="number"
-              type="tel"
-              name="number"
-              // value={state.number}
-              onChange={this.handleChange}
-            />
+            <Input id="number" type="tel" name="number" />
             <ErrorMessage name="number" />
           </Wrapper>
 
