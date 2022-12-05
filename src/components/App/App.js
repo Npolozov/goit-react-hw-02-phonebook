@@ -1,5 +1,5 @@
 import { Component } from 'react';
-import { Form } from '../Form/Form';
+import { ContactForm } from '../Form/Form';
 import { List } from '../List/List';
 import { nanoid } from 'nanoid';
 import { Filter } from '../Filter/Filter';
@@ -21,8 +21,13 @@ export class App extends Component {
     ) {
       alert(`${name} is already in contacts.`);
     } else {
+      const contact = {
+        name,
+        number,
+        id: nanoid(),
+      };
       this.setState(prevState => ({
-        contacts: [...prevState.contacts, { id: nanoid(), name, number }],
+        contacts: [...prevState.contacts, contact],
       }));
     }
   };
@@ -52,7 +57,7 @@ export class App extends Component {
         <Container>
           <Wrapper>
             <Title>Phonebook</Title>
-            <Form onSubmit={this.addContact} />
+            <ContactForm onSubmit={this.addContact} />
           </Wrapper>
           <WrapperContact>
             <p>Total contacts: {lenghtContactts}</p>

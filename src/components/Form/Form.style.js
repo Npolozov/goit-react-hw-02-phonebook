@@ -1,9 +1,15 @@
 import styled from 'styled-components';
+import { Field } from 'formik';
 
 export const Wrapper = styled.div`
   display: flex;
   flex-direction: column;
   margin: 0 0 20px 0;
+`;
+
+export const Input = styled(Field)`
+  width: 100%;
+  padding: 10px;
 `;
 
 export const Button = styled.button`
@@ -25,4 +31,8 @@ export const Button = styled.button`
     box-shadow: inset 0px 0px 4px 4px rgba(0, 0, 0, 0.15);
     color: white;
   }
+`;
+
+export const Label = styled.label`
+  margin-bottom: 10px;
 `;

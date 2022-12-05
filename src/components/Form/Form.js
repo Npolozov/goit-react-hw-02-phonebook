@@ -1,19 +1,23 @@
 import { Component } from 'react';
-// import { nanoid } from 'nanoid';
-import { Wrapper, Button } from './Form.style';
+import { Formik, Form, ErrorMessage } from 'formik';
+import { Wrapper, Button, Label, Input } from './Form.style';
+import * as yup from 'yup';
 
-export class Form extends Component {
+export class ContactForm extends Component {
   state = {
-    name: '',
-    number: '',
+    name: ' ',
+    number: ' ',
   };
 
-  handleSubmit = evt => {
-    evt.preventDefault();
+  schema = yup.object().shape({
+    name: yup.string().required(),
+    number: yup.number().required(),
+  });
 
+  handleSubmit = (values, { resetForm }) => {
     this.props.onSubmit(this.state);
-
-    this.reset();
+    console.log(values);
+    resetForm();
   };
 
   handleChange = evt => {
@@ -21,42 +25,44 @@ export class Form extends Component {
     this.setState({ [name]: value });
   };
 
-  reset = () => {
-    this.setState({ name: '', number: '' });
-  };
+  // reset = () => {
+  //   this.setState({ name: '', number: '' });
+  // };
 
   render() {
     return (
-      <form onSubmit={this.handleSubmit}>
-        <Wrapper>
-          <label htmlFor="name">Name</label>
-          <input
-            type="text"
-            id="name"
-            value={this.state.name}
-            onChange={this.handleChange}
-            name="name"
-            pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-            title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-            required
-          />
-        </Wrapper>
-        <Wrapper>
-          <label htmlFor="number">Number</label>
-          <input
-            id="number"
-            type="tel"
-            name="number"
-            value={this.state.number}
-            onChange={this.handleChange}
-            pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-            title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-            required
-          />
-        </Wrapper>
+      <Formik
+        initialValues={this.state}
+        // validationSchema={this.schema}
+        onSubmit={this.handleSubmit}
+      >
+        <Form>
+          <Wrapper>
+            <Label htmlFor="name">Name</Label>
+            <Input
+              type="text"
+              id="name"
+              value={this.state.name}
+              onChange={this.handleChange}
+              name="name"
+            />
+            <ErrorMessage name="name" />
+          </Wrapper>
+          <Wrapper>
+            <Label htmlFor="number">Number</Label>
+            <Input
+              id="number"
+              type="tel"
+              name="number"
+              value={this.state.number}
+              onChange={this.handleChange}
+            />
+            <ErrorMessage name="number" />
+          </Wrapper>
 
-        <Button type="submit">Add Contacs</Button>
-      </form>
+          <Button type="submit">Add Contacs</Button>
+        </Form>
+      </Formik>
     );
   }
 }
