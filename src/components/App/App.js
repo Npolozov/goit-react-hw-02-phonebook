@@ -53,7 +53,6 @@ export class App extends Component {
 
     return (
       <>
-        {' '}
         <Container>
           <Wrapper>
             <Title>Phonebook</Title>

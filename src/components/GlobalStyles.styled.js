@@ -11,6 +11,10 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  align-content: center;
 }
 
 code {
@@ -40,4 +44,6 @@ ul {
   padding: 0;
   margin: 0;
 }
+
+
 `;
