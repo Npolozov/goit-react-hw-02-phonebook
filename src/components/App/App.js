@@ -6,11 +6,28 @@ import { Filter } from '../Filter/Filter';
 import initialContact from 'contact.json';
 import { Container, Wrapper, WrapperContact, Title } from './App.styled';
 import { GlobalStyle } from '../GlobalStyles.styled';
+import { OpenModal } from 'components/Modal/Modal';
 export class App extends Component {
   state = {
     contacts: initialContact,
     filter: '',
+    showModal: false,
   };
+
+  componentDidMount() {
+    const contact = localStorage.getItem('contact');
+    const parseContact = JSON.parse(contact);
+
+    if (parseContact) {
+      this.setState({ contacts: parseContact });
+    }
+  }
+
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.contacts !== prevState.contacts) {
+      localStorage.setItem('contact', JSON.stringify(this.state.contacts));
+    }
+  }
 
   addContact = ({ name, number }) => {
     const { contacts } = this.state;
@@ -43,8 +60,14 @@ export class App extends Component {
     }));
   };
 
+  toggleModal = () => {
+    this.setState(({ showModal }) => ({
+      showModal: !showModal,
+    }));
+  };
+
   render() {
-    const { contacts, filter } = this.state;
+    const { contacts, filter, showModal } = this.state;
     const lenghtContactts = contacts.length;
     const normalizeFilter = this.state.filter.toLowerCase();
     const visibleContact = this.state.contacts.filter(contact =>
@@ -54,6 +77,11 @@ export class App extends Component {
     return (
       <>
         <Container>
+          <button type="button" onClick={this.toggleModal}>
+            Open Modal
+          </button>
+
+          {showModal && <OpenModal onClose={this.toggleModal}></OpenModal>}
           <Wrapper>
             <Title>Phonebook</Title>
             <ContactForm onSubmit={this.addContact} />
