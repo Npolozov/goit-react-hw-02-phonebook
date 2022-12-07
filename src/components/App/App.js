@@ -80,7 +80,6 @@ export class App extends Component {
           <button type="button" onClick={this.toggleModal}>
             Open Modal
           </button>
-
           {showModal && <OpenModal onClose={this.toggleModal}></OpenModal>}
           <Wrapper>
             <Title>Phonebook</Title>
