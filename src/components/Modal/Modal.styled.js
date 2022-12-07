@@ -11,7 +11,7 @@ export const BackDrop = styled.div`
 
 export const Modal = styled.div`
   width: 500px;
-  height: 100%;
+  max-height: 100%;
   padding: 20px 10px;
   border: 1px solid black;
   background-color: white;

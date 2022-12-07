@@ -3,13 +3,25 @@ import { ContactForm } from '../Form/Form';
 import { List } from '../List/List';
 import { nanoid } from 'nanoid';
 import { Filter } from '../Filter/Filter';
-import initialContact from 'contact.json';
-import { Container, Wrapper, WrapperContact, Title } from './App.styled';
+// import initialContact from 'contact.json';
+import {
+  Container,
+  Wrapper,
+  WrapperContact,
+  Title,
+  Button,
+} from './App.styled';
 import { GlobalStyle } from '../GlobalStyles.styled';
 import { OpenModal } from 'components/Modal/Modal';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 export class App extends Component {
+  static defaultProps = {
+    initialStickers: [],
+  };
+
   state = {
-    contacts: initialContact,
+    contacts: [],
     filter: '',
     showModal: false,
   };
@@ -20,6 +32,8 @@ export class App extends Component {
 
     if (parseContact) {
       this.setState({ contacts: parseContact });
+    } else {
+      this.setState({ contacts: this.props.initialStickers });
     }
   }
 
@@ -27,6 +41,12 @@ export class App extends Component {
     if (this.state.contacts !== prevState.contacts) {
       localStorage.setItem('contact', JSON.stringify(this.state.contacts));
     }
+    // if (
+    //   this.state.contacts.length > prevState.contacts.length &&
+    //   prevState.contacts.length !== 0
+    // ) {
+    //   this.toggleModal();
+    // }
   }
 
   addContact = ({ name, number }) => {
@@ -36,7 +56,7 @@ export class App extends Component {
         contact => contact.name.toLowerCase() === name.toLowerCase()
       )
     ) {
-      alert(`${name} is already in contacts.`);
+      toast.error(`${name} is already in contacts.`);
     } else {
       const contact = {
         name,
@@ -47,6 +67,7 @@ export class App extends Component {
         contacts: [...prevState.contacts, contact],
       }));
     }
+    this.toggleModal();
   };
 
   changeFilter = e => {
@@ -77,13 +98,16 @@ export class App extends Component {
     return (
       <>
         <Container>
-          <button type="button" onClick={this.toggleModal}>
-            Open Modal
-          </button>
-          {showModal && <OpenModal onClose={this.toggleModal}></OpenModal>}
           <Wrapper>
-            <Title>Phonebook</Title>
-            <ContactForm onSubmit={this.addContact} />
+            <Button type="button" onClick={this.toggleModal}>
+              Add Contact
+            </Button>
+            {showModal && (
+              <OpenModal onClose={this.toggleModal}>
+                <Title>Phonebook</Title>
+                <ContactForm onSubmit={this.addContact} />
+              </OpenModal>
+            )}
           </Wrapper>
           <WrapperContact>
             <p>Total contacts: {lenghtContactts}</p>
@@ -96,6 +120,7 @@ export class App extends Component {
               />
             )}
           </WrapperContact>
+          <ToastContainer autoClose={2000} />
         </Container>
         <GlobalStyle />
       </>
