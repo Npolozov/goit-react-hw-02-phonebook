@@ -120,7 +120,7 @@ export class App extends Component {
               />
             )}
           </WrapperContact>
-          <ToastContainer autoClose={2000} />
+          <ToastContainer autoClose={2000} position="top-right" />
         </Container>
         <GlobalStyle />
       </>
