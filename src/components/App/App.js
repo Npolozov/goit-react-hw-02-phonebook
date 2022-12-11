@@ -3,7 +3,6 @@ import { ContactForm } from '../Form/Form';
 import { List } from '../List/List';
 import { nanoid } from 'nanoid';
 import { Filter } from '../Filter/Filter';
-// import initialContact from 'contact.json';
 import {
   Container,
   Wrapper,
