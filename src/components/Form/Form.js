@@ -20,22 +20,12 @@ export class ContactForm extends Component {
     resetForm();
   };
 
-  // handleChange = evt => {
-  //   const { name, value } = evt.target;
-  //   this.setState({ [name]: value });
-  // };
-
-  // reset = () => {
-  //   this.setState({ name: '', number: '' });
-  // };
-
   render() {
     return (
       <Formik
         initialValues={state}
         validationSchema={schema}
         onSubmit={this.handleSubmit}
-        // onChange={this.handleChange}
       >
         <Form>
           <Wrapper>
